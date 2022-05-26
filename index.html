@@ -8,175 +8,111 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 
     <title>스파르타코딩클럽 | 부트스트랩 연습하기</title>
-
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
-
         * {
             font-family: 'Do Hyeon', sans-serif;
         }
-
         .wrap {
-            width: 900px;
+            width: 80%;
             margin: auto;
+            display : block;
         }
-
-        .art_head {
-            color: darkcyan;
+        #cat {
+            width: 300px;
+            margin: 30px auto;
+            display : block;
+            border-radius: 20px;
+            box-shadow: 5px 5px 5px grey;
         }
-
-        .comment {
-            color: blue;
-            font-weight: bold;
+        .price {
+            font-size: small;
+            font-weight: lighter;
         }
-
-        .postbox {
-            backgound-color: pink;
-            width: 500px;
-            padding: 40px;
-            border: black 2px solid;
+        #order {
+            width: 100px;
+            margin: auto;
+            display: block;
+            background-color : dodgerblue;
+            color: white;
+            border : none;
             border-radius: 3px;
-            margin: 20px auto;
-            display : none;
         }
-    </style>
+        #exchange {
+            color : blue;
+        }
 
+    </style>
     <script>
+        function good() {
+            alert('주문이 완료되었습니다.');
+        }
+
         $(document).ready(function () {
-            listing();
+            q1();
         });
 
-        function listing() {
+        function q1 () {
             $.ajax({
-              type: "GET",
-              url: "https://api.thecatapi.com/v1/images/search",
-              data: {},
-              success: function (response) {
-                  let catImg = response[0]['url'];
-                  // console.log (catImg);
-                  $("#img-cat").attr("src", catImg);
-              }
-          })
-        }
-
-        function openclose(){
-            let status = $('#post-box').css('display');
-            if (status == 'block') {
-                $('#post-box').hide();
-                $('#btn-postbox').text('포스팅박스 열기');
-            } else {
-                $('#post-box').show();
-                $('#btn-postbox').text('포스팅박스 닫기');
+          type: "GET",
+          url: "http://spartacodingclub.shop/sparta_api/rate",
+          data: {},
+          success: function(response){
+             let rate = response['rate']
+              let temp_html = `<p>달러-원 환율 : ${rate}</p>`
+              $('#exchange').append(temp_html)
             }
+          })
         }
     </script>
 </head>
 
 <body>
-<div class="wrap">
-    <div class="jumbotron">
-        <h1 class="display-4">나홀로 링크 메모장!</h1>
-        <p class="lead">중요한 링크를 저장해두고, 나중에 볼 수 있는 공간입니다.</p>
-        <hr class="my-4">
-        <p class="lead">
-            <a onclick="openclose()" class="btn btn-primary btn-lg" id="btn-postbox" href="#" role="button">포스팅박스 열기</a>
-        </p>
+    <div class="wrap">
+        <img src="hoon.jpeg" id="cat" alt="hoon">
+        <h2>상품 제목 <span class="price">가격 : 1,000,000,000원 / 훈</span></h2>
+        <p>이 상품으로 말할 것 같으면 저 세상에서도 보기힘든 귀여운 고양이다. 아기같은 매력과 중후한 매력이 함께있는 보기드문 고양이란 말이다.</p>
+        <br>
+        <div id="exchange"></div>
+        <h2>주문하기</h2>
+        <div>
+            <div class="form-group">
+                <label for="exampleFormControlInput1">주문자 성함 : </label>
+                <input type="text" class="form-control" id="exampleFormControlInput1">
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">수량 : </label>
+                <select class="form-control" id="exampleFormControlSelect1">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlInput2">주소 : </label>
+                <input type="text" class="form-control" id="exampleFormControlInput2">
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlInput3">전화번호 : </label>
+                <input type="tel" class="form-control" id="exampleFormControlInput3">
+            </div>
+        </div>
+        <button id="order" onclick="good()">주문하기</button>
     </div>
-    <div class="postbox" id="post-box">
-        <div class="form-group">
-            <label>아티클 URL</label>
-            <input type="text" class="form-control" id="article-url" aria-describedby="emailHelp">
-        </div>
-        <div class="form-group">
-            <label for="exampleFormControlTextarea1">간단 코멘트</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">기사저장</button>
-    </div>
-
-
-    <div class="card-columns" id="cards-box">
-        <div class="card">
-            <img class="card-img-top"
-                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Sunflower_sky_backdrop.jpg/1200px-Sunflower_sky_backdrop.jpg"
-                 alt="Card image cap">
-            <div class="card-body">
-                <p class="art_head"><a href="https://www.naver.com/">여기 기사 제목이 들어가죠</a></p>
-                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
-                    content. This content is a little bit longer.</p>
-                <p class="comment">여기에 코멘트가 들어갑니다.</p>
-            </div>
-        </div>
-        <div class="card">
-            <img class="card-img-top"
-                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Sunflower_sky_backdrop.jpg/1200px-Sunflower_sky_backdrop.jpg"
-                 alt="Card image cap">
-            <div class="card-body">
-                <p class="art_head"><a href="https://www.naver.com/">여기 기사 제목이 들어가죠</a></p>
-                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
-                    content. This content is a little bit longer.</p>
-                <p class="comment">여기에 코멘트가 들어갑니다.</p>
-            </div>
-        </div>
-        <div class="card">
-            <img class="card-img-top"
-                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Sunflower_sky_backdrop.jpg/1200px-Sunflower_sky_backdrop.jpg"
-                 alt="Card image cap">
-            <div class="card-body">
-                <p class="art_head"><a href="https://www.naver.com/">여기 기사 제목이 들어가죠</a></p>
-                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
-                    content. This content is a little bit longer.</p>
-                <p class="comment">여기에 코멘트가 들어갑니다.</p>
-            </div>
-        </div>
-        <div class="card">
-            <img class="card-img-top"
-                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Sunflower_sky_backdrop.jpg/1200px-Sunflower_sky_backdrop.jpg"
-                 alt="Card image cap">
-            <div class="card-body">
-                <p class="art_head"><a href="https://www.naver.com/">여기 기사 제목이 들어가죠</a></p>
-                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
-                    content. This content is a little bit longer.</p>
-                <p class="comment">여기에 코멘트가 들어갑니다.</p>
-            </div>
-        </div>
-        <div class="card">
-            <img class="card-img-top"
-                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Sunflower_sky_backdrop.jpg/1200px-Sunflower_sky_backdrop.jpg"
-                 alt="Card image cap">
-            <div class="card-body">
-                <p class="art_head"><a href="https://www.naver.com/">여기 기사 제목이 들어가죠</a></p>
-                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
-                    content. This content is a little bit longer.</p>
-                <p class="comment">여기에 코멘트가 들어갑니다.</p>
-            </div>
-        </div>
-        <div class="card">
-            <img class="card-img-top"
-                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Sunflower_sky_backdrop.jpg/1200px-Sunflower_sky_backdrop.jpg"
-                 alt="Card image cap">
-            <div class="card-body">
-                <p class="art_head"><a href="https://www.naver.com/">여기 기사 제목이 들어가죠</a></p>
-                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
-                    content. This content is a little bit longer.</p>
-                <p class="comment">여기에 코멘트가 들어갑니다.</p>
-            </div>
-        </div>
-    </div>
-</div>
 </body>
 
 </html>
